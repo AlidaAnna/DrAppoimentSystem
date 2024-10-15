@@ -1,0 +1,80 @@
+body.login { 
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #090909, rgb(255, 255, 255));
+}
+
+.container {
+    width: 700px;
+    display: flex;
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.content {
+    padding: 10px;
+    margin-top: 60px;
+    border-radius: 10px;
+}
+
+.log {
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-size: 22px;
+    font-weight: bold;
+}
+
+input {
+    width: 200px; 
+    display: flex;
+    font-size: 16px;
+    margin: 40px; 
+    color: rgb(0, 0, 0);
+    border: none;
+    outline: none;
+    border-bottom: 2px solid rgb(2, 2, 2);
+}
+
+input::placeholder {
+    color: rgb(94, 89, 92);
+    font-size: 16px;
+}
+select {
+    width: 200px; 
+    display: flex;
+    font-size: 16px;
+    margin: 40px; 
+    color: rgb(0, 0, 0);
+    border: none;
+    outline: none;
+    border-bottom: 2px solid rgb(2, 2, 2);
+    margin-top: 20px; /* Add this to move the dropdown down */
+}
+
+button {
+    width: 120px; 
+    height: 35px; 
+    color: #fff;
+    background-color: rgb(0, 0, 0);
+    font-size: 16px;
+    display: flex;
+    margin: auto;
+    padding: 5px 38px;
+    text-align: center;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+button:hover {
+    color: rgb(3, 3, 3);
+    background-color: #fff;
+    font-weight: bold;
+    outline: 2px solid rgb(0, 0, 0);
+}
