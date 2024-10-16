@@ -25,7 +25,7 @@ if($num>0)
   echo "Password alredy exist";
 }
 else{
-$query="insert into users(firstname,lastname,address,phno,email,username,age,Gender) values('$fn','$ln','$address','$phno','$email','$uname','$age','$gender')";
+$query="insert into user(firstname,lastname,address,phno,email,username,age,gender) values('$fn','$ln','$address','$phno','$email','$uname','$age','$gender')";
 $query2="insert into login(username,password,role) values('$uname','$password','$role')";
 if(mysqli_query($con,$query) && mysqli_query($con,$query2))
 {
@@ -133,11 +133,11 @@ top: 13px;
                   <label class="form-label" for="form3Example97">Email ID</label>
                 </div>
                 <div data-mdb-input-init class="form-outline mb-4">
-    <input type="password" name="password" id="form3Example99" class="form-control form-control-lg" 
-           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" 
-           title="Password must be at least 8 characters, include one uppercase letter, one lowercase letter, one number, and one special character."
-           required />
-    <label class="form-label" for="form3Example99">Password</label>
+    <input type="text" name="username" id="form3Example99" class="form-control form-control-lg" 
+           pattern="[A-Za-z0-9]{5,15}" 
+           title="Username must be between 5 and 15 characters and contain only letters and numbers." 
+           required minlength="5" maxlength="15" />
+    <label class="form-label" for="form3Example99">Username</label>
 </div>
 
                 <div data-mdb-input-init class="form-outline mb-4">

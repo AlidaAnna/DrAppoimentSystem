@@ -16,17 +16,27 @@ if(isset($_POST["submit"]))
     $pass=$_POST["password"];
     $role="doctor";
     $con=mysqli_connect("localhost","root","","dr");
-    $query1="insert into doctor(name,DOB,qualification,DOJ,specialization,username,gender,phno,email) values('$name','$dob','$quali','$doj','$sp','$un','$gen','$phno','$email')";
-    $query2="insert into login(username,password,role) values('$un','$pass','$role')";
-    if (mysqli_query($con, $query1) && mysqli_query($con, $query2)) {
-        // Commit the transaction if both queries succeed
-        mysqli_commit($con);
-        echo "Records inserted successfully.";
-    } else {
-        // Rollback the transaction if any of the queries fail
-        mysqli_rollback($con);
-        echo "Error: Could not insert records. " . mysqli_error($con);
+    $query="select count(*) AS dc from doctor";
+    $result=mysqli_query($con,$query);
+    $row=mysqli_fetch_assoc($result);
+    $dc=$row['dc'];
+    if($dc>1)
+    {
+      echo "Error: Limit exceeded. You cannot add more than 3 doctors.";
     }
+    else
+    {
+    $query1="insert into doctor(name,DOB,qualification,DOJ,specialization,username,phno,email,gender) values('$name','$dob','$quali','$doj','$sp','$un','$phno','$email','$gen')";
+    $query2="insert into login(username,password,role) values('$un','$pass','$role')";
+    if(mysqli_query($con,$query1) && mysqli_query($con,$query2))
+{
+header ("Location: doctordetails.php?status=success");
+  exit();
+}
+else{
+  echo "Error: " . $query . "<br>" . mysqli_error($con);
+}
+}
 }
 ?>
 <!DOCTYPE html>
