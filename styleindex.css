@@ -1,6 +1,6 @@
 
 body{    
-    background-color: blueviolet;
+    background-color: white;
     background-repeat: no-repeat;
     background-size: cover;
     width: 100vw;
@@ -35,7 +35,7 @@ body{
   #btn{
       width: 100%;
       color:rgb(255, 255, 255);
-      background-color: rgb(108, 22, 190);
+      background-color: rgb(255, 255, 255);
       padding:10px;
       font-weight: 700;
       font-size: larger;

@@ -40,9 +40,19 @@ $result=mysqli_query($con,$query);
       <td><?= $row['7']; ?></td>
       <td><?= $row['8']; ?></td>
       <td>
-      <button type="button"  class="btn btn-danger btn-sm px-3">
+        <form method="POST" action="doctordelete.php" onsubmit="return confirm('Are you sure you want to delete');">
+      <input type="hidden" name="id" value="<?=$row['0'];?>">
+      <button type="submit" class="btn btn-danger btn-sm px-3">
       <i class="fas fa-times">Delete</i>
       </button>
+      </td>
+      <td>
+        <form method="POST" action="updatedoctor.php">
+          <input type="hidden" name="id" value="<?= $row['id']; ?>">
+          <button type="submit" class="btn btn-warning btn-sm px-3">
+            <i class="fas fa-edit"> Update</i>
+          </button>
+        </form>
       </td>
       <tr>
     </tr>
