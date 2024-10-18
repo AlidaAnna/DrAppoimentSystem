@@ -4,29 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Set Appointment Time</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #e9ecef; /* Light grey background */
+            background-color: #e9ecef; 
         }
         .form-container {
             max-width: 600px;
             margin: 50px auto;
-            background-color: #ffffff; /* White background for form */
+            background-color: #ffffff; 
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
         h2 {
-            color: #343a40; /* Dark color for header */
+            color: #343a40; 
         }
         .btn-primary {
-            background-color: #007bff; /* Primary button color */
+            background-color: #007bff; 
             border: none;
         }
         .btn-primary:hover {
-            background-color: #0056b3; /* Darker shade on hover */
+            background-color: #0056b3; 
         }
     </style>
 </head>
@@ -49,8 +48,6 @@
             <button type="submit" class="btn btn-primary btn-block" name="submit">Submit</button>
         </form>
     </div>
-    
-    <!-- Bootstrap JS and dependencies (optional) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -62,7 +59,19 @@ if(isset($_POST["submit"]))
     $stime = $_POST["stime"];
     $etime = $_POST["etime"];
     $conn=mysqli_connect("localhost","root","","dr");
-    $query="insert into"
+    $query="insert into timeslot  (date,starttime,endtime) values ('$date','$stime','$etime')";
+    if(mysqli_query($conn,$query))
+    {
+      
+            echo "Time range saved successfully!";
+    } 
+    else
+    {
+            echo "Error: " . mysqli_error($conn);
+    }
+
+
 }
+?>
 </body>
 </html>
