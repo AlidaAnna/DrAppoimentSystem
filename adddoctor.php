@@ -66,7 +66,7 @@ top: 13px;
         <div class="card card-registration my-4">
           <div class="row g-0">
             <div class="col-xl-6 d-none d-xl-block">
-              <img src="image\Untitled design (1).png"
+              <img src="image\Untitled design (2).png"
                 alt="Sample photo" class="img-fluid"
                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
             </div>

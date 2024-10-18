@@ -1,3 +1,7 @@
-<html>
-    <h1>Patient Page</h1>
-</html>
+<?php
+session_start();
+if(isset($_SESSION['username']))
+{
+    $username=$_SESSION['username'];
+    echo " welcome". $username;
+}

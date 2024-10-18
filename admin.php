@@ -1,3 +1,12 @@
+<?php
+session_start();
+// Check if the user is logged in
+if (isset($_SESSION['username'])) {
+    // If not logged in, redirect to login page
+    header("Location: login.php");
+    exit();
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,7 +18,7 @@
     <style>
         .card {
             background-color: #fff;
-            border-radius: 10px;
+            border-radius:10px;
             border: none;
             position: relative;
             margin-bottom: 30px;
@@ -41,7 +50,7 @@
                     <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.php">Patient</a>
+                    <a class="nav-link" href="patientdetails.php">Patient</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="appointments.php">Appointments</a>
@@ -58,6 +67,7 @@
                 </li> 
             </ul>
         </div>
+        <a href="logout.php" class="btn btn-light">Logout</a>
     </div>
 </nav>
 <br>

@@ -28,6 +28,7 @@
 // } else {
 //     echo "File not found!";
 // }
+  session_start();
   if (isset($_POST["submit"])) {
       //echo "hai";
       $un = $_POST["username"];
@@ -46,6 +47,7 @@
         $result=mysqli_query($con,$query1);
         $row=mysqli_fetch_assoc($result);
         $role=$row["role"];
+        $_SESSION['username']=$un;
         if($role == 'Patient')
         {
             header("location:Patient.php");
