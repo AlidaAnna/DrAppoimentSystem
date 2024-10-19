@@ -1,4 +1,5 @@
 <?php
+include 'conn.php';
 if(isset($_POST["submit"]))
 {
     $name=$_POST["Name"];
@@ -15,12 +16,11 @@ if(isset($_POST["submit"]))
     $un=$_POST["username"];
     $pass=$_POST["password"];
     $role="doctor";
-    $con=mysqli_connect("localhost","root","","dr");
     $query="select count(*) AS dc from doctor";
     $result=mysqli_query($con,$query);
     $row=mysqli_fetch_assoc($result);
     $dc=$row['dc'];
-    if($dc>1)
+    if($dc>=3)
     {
       echo "Error: Limit exceeded. You cannot add more than 3 doctors.";
     }

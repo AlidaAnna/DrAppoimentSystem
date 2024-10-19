@@ -10,8 +10,8 @@
 // $pass="";
 // $db="dr";
 // $con = mysqli_connect($host, $user, $pass, $db) or die("connection error" . mysqli_connect_error);
-session_start();
-$con=mysqli_connect("localhost:5222","root","","dr");
-
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start(); // Start the session if not already started
+}
+$con=mysqli_connect("localhost","root","","dr");
 ?>

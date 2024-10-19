@@ -1,14 +1,14 @@
 <?php
+include 'conn.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST["id"];
-    $conn = mysqli_connect("localhost", "root", "", "dr");
 
-    if (!$conn) {
+    if (!$con) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
     $query = "SELECT * FROM doctor WHERE did='$id'";
-    $result = mysqli_query($conn, $query);
+    $result = mysqli_query($con, $query);
 
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result); 
@@ -27,18 +27,18 @@ if (isset($_POST["submit"])) {
     $u = $_POST["un"];
 
     $query2 = "UPDATE doctor SET name='$n', qualification='$q', DOJ='$doj', specialization='$s', username='$u', phno='$phn', email='$email' WHERE did='$id'";
-    $result2 = mysqli_query($conn, $query2);
+    $result2 = mysqli_query($con, $query2);
     if ($result2) {
       echo "Record updated successfully.";
   } else {
-      echo "Error updating record: " . mysqli_error($conn);
+      echo "Error updating record: " . mysqli_error($con);
   }
     header("location:doctordetails.php");
 
    
 
 
-    mysqli_close($conn);
+    mysqli_close($con);
 }
 ?>
 <html>

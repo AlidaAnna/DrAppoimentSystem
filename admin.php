@@ -1,8 +1,6 @@
 <?php
-session_start();
-// Check if the user is logged in
-if (isset($_SESSION['username'])) {
-    // If not logged in, redirect to login page
+include 'conn.php';
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
@@ -76,26 +74,22 @@ if (isset($_SESSION['username'])) {
 <div class="container">
     <div class="row">
         <?php
-        // Database connection
-        $conn = mysqli_connect("localhost", "root", "", "dr");
-
-        // Check the connection
-        if (!$conn) {
+        if (!$con) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
         // Query to count patients
         $query = "SELECT COUNT(*) AS uc FROM user";
-        $result = mysqli_query($conn, $query);
+        $result = mysqli_query($con, $query);
         $uc = ($result) ? mysqli_fetch_assoc($result)['uc'] : 0;
 
         // Query to count doctors
         $query = "SELECT COUNT(*) as dc FROM doctor";
-        $result = mysqli_query($conn, $query);
+        $result = mysqli_query($con, $query);
         $dc = ($result) ? mysqli_fetch_assoc($result)['dc'] : 0;
 
         // Close the connection
-        mysqli_close($conn);
+        mysqli_close($con);
 
         // Calculate progress width for patients and doctors
         $max_users = 10; // Define max limit for patients

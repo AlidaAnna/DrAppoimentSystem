@@ -32,7 +32,29 @@
 <body>
     <div class="form-container">
         <h2 class="text-center">Set Appointment Time Range</h2>
-        <form action="" method="POST">
+        <form action="" method="POST">  
+                <div class="form-group">
+                <label for="doctor">Doctor:</label>
+                  <select id="doctor" name="doctor" class="form-control">
+                 <?php
+                  include 'conn.php';
+                  $query="select did,name from doctor";
+                  $result=mysqli_query($con,$query);
+                  $row=mysqli_num_rows($result);
+                  if($row>0)
+                  {
+                    while($doc=mysqli_fetch_assoc($result))
+                    {
+                        echo "<option value='" . $doc['did'] . "'>" . $doc['name'] . "</option>";
+                    }
+                  }
+                 else {
+                    echo "<option value=''>No doctors available</option>";
+                }
+                ?>
+                 </select>
+                 </div>
+
             <div class="form-group">
                 <label for="date">Date:</label>
                 <input type="date" class="form-control" name="date" required>
@@ -55,19 +77,16 @@
 <?php
 if(isset($_POST["submit"]))
 {
+    include 'conn.php';
+    $did=$_POST["doctor"];
     $date = $_POST["date"];
     $stime = $_POST["stime"];
     $etime = $_POST["etime"];
-    $conn=mysqli_connect("localhost","root","","dr");
-    $query="insert into timeslot  (date,starttime,endtime) values ('$date','$stime','$etime')";
-    if(mysqli_query($conn,$query))
-    {
-      
-            echo "Time range saved successfully!";
-    } 
-    else
-    {
-            echo "Error: " . mysqli_error($conn);
+    $query="insert into timeslot  (did,date,starttime,endtime) values ('$did','$date','$stime','$etime')";
+    if (mysqli_query($con, $query)) {
+        echo "<script>alert('Time range saved successfully!');</script>";
+    } else {
+        echo "<script>alert('Error: " . mysqli_error($con) . "');</script>";
     }
 
 

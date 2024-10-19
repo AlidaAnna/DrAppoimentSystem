@@ -1,5 +1,5 @@
 <?php
-$con=mysqli_connect("localhost","root","","dr");
+include 'conn.php';
 $query="select * from doctor";
 $result=mysqli_query($con,$query);
 ?>
