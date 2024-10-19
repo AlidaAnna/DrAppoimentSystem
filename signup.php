@@ -1,4 +1,5 @@
 <?php
+include 'conn.php';
 if(isset($_POST["submit"]))
 {
   $fn=$_POST["Firstname"];
@@ -13,7 +14,6 @@ if(isset($_POST["submit"]))
   $uname=$_POST["username"];
   $password=$_POST["password"];
   $role="Patient";
-  $con=mysqli_connect("localhost","root","","dr");
   if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }

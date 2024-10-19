@@ -28,13 +28,14 @@
 // } else {
 //     echo "File not found!";
 // }
-  session_start();
+  
+  include 'conn.php';
   if (isset($_POST["submit"])) {
       //echo "hai";
       $un = $_POST["username"];
       $pass = $_POST["password"];
 
-      $con = mysqli_connect("localhost", "root", "", "dr");
+      
       if (!$con) {
           die("Connection failed: " . mysqli_connect_error());
       }
