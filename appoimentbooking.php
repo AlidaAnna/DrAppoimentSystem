@@ -28,6 +28,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         echo "<script>alert('No time range set for this doctor on the selected date.');</script>";
     }
+    $query="select appotime from booking where did='$doctor_id' and appodate='$date'";
+    $result=mysqli_query($con,$query);
+    $bookslot=[];
+    while ($row =mysqli_fetch_assoc($result))
+    {
+        $bookslot[]=$row['appotime'];
+    }
+    if(isset($_POST["submit"]))
+    {
+        $uname=$_POST["uname"];
+        $query="select uid from user where username='$uname'";
+        $result=mysqli_query($con,$query);
+        $row=mysqli_fetch_assoc($result);
+        $uid=$row['uid'];
+        $appotime=$_POST["appointment_time"];
+        if(!in_array($appointment_time,$bookslot))
+        $query1="insert into booking (uid,did,appotime,appodate) values  ('$uid','$did','$appotime','$date')";
+        if (mysqli_query($con, $query1)) {
+            echo "<script>alert('Appointment successfully booked!');</script>";
+        } else {
+            echo "<script>alert('Error booking the appointment.');</script>";
+        }
+    } else {
+        echo "<script>alert('This time slot is already booked.');</script>";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -100,7 +125,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <select name="appointment_time" class="form-select" required>
                     <?php
                     foreach ($time_slots as $slot) {
-                        echo "<option value='$slot'>$slot</option>";
+                        if(in_array($slot,$booked_slots))
+                        {
+                            echo "<option value='$slot' class='booked' disabled>$slot (Booked)</option>";
+                        }
+                        else{
+                            echo "<option value='$slot'>$slot (Available)</option>";
+                        }
                     }
                     ?>
                 </select>
