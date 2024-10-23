@@ -4,7 +4,7 @@ $time_slots = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $doctor_id = $_POST['doctor']; 
-    $date = $_POST["date"]; 
+    $date = $_POST['date']; 
 
     if (!$con) {
         die("Connection failed: " . mysqli_connect_error());
@@ -30,10 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $query="select appointment_time from appointment where uid='$doctor_id' and appointment_date='$date'";
     $result=mysqli_query($con,$query);
-    $bookslot=[];
+    $booked_slots = [];
     while ($row =mysqli_fetch_assoc($result))
     {
-        $bookslot[]=$row['appointment_time'];
+        $booked_slots[]=$row['appointment_time'];
     }
     if(isset($_POST["submit"]))
     {
@@ -42,13 +42,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result=mysqli_query($con,$query);
         $row=mysqli_fetch_assoc($result);
         $uid=$row['uid'];
-        $query2="select tid from timeslot where username='$uname'";
-        $result2=mysqli_query($con,$query);
-        $row=mysqli_fetch_assoc($result);
-        $uid=$row['uid'];
+        $query2="select tid from timeslot where uid='$uid'";
+        $result2=mysqli_query($con,$query2);
+        $row=mysqli_fetch_assoc($result2);
+        $tid=$row['tid'];
         $appotime=$_POST["appointment_time"];
-        if(!in_array($appotime,$bookslot))
-        $query1="insert into appointment (uid,tid,appointment_date,appointment_time,status,created_at) values  ('$uid','$did','$appotime','$date')";
+        if(!in_array($appotime,$booked_slots))
+        {
+        $status = 'booked';
+        $query1="insert into appointment (uid,tid,appointment_date,appointment_time,status,created_at) values  ('$uid','$tid','$date','$appotime','$status',NOW())";
         if (mysqli_query($con, $query1)) {
             echo "<script>alert('Appointment successfully booked!');</script>";
         } else {
@@ -57,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         echo "<script>alert('This time slot is already booked.');</script>";
     }
+}
 }
 ?>
 <!DOCTYPE html>
@@ -103,14 +106,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   <select id="doctor" name="doctor" class="form-control">
                  <?php
                   include 'conn.php';
-                  $query="select did,name from doctor";
+                  $query="select l.uid,u.firstname from login l join  user u on l.uid=u.uid where l.role='doctor'";
+
                   $result=mysqli_query($con,$query);
                   $row=mysqli_num_rows($result);
                   if($row>0)
                   {
                     while($doc=mysqli_fetch_assoc($result))
                     {
-                        echo "<option value='" . $doc['did'] . "'>" . $doc['name'] . "</option>";
+                        echo "<option value='" . $doc['did'] . "'>" . $doc['firstname'] . "</option>";
                     }
                   }
                  else {

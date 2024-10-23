@@ -82,7 +82,7 @@ if(isset($_POST["submit"]))
     $date = $_POST["date"];
     $stime = $_POST["stime"];
     $etime = $_POST["etime"];
-    $query="insert into timeslot(bookdate,starttime,endtime) values ('$date','$stime','$etime')";
+    $query="insert into timeslot(uid,bookdate,starttime,endtime) values ('$did','$date','$stime','$etime')";
     if (mysqli_query($con, $query)) {
         echo "<script>alert('Time range saved successfully!');</script>";
     } else {
