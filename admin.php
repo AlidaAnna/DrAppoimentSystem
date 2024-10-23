@@ -60,7 +60,7 @@ if (!isset($_SESSION['username'])) {
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="adddoctor.php">Add</a></li>
                         <li><a class="dropdown-item" href="doctordetails.php">Update</a></li>
-                        <li><a class="dropdown-item" href="doctordetails.php">Delete</a></li>
+                        <li><a class="dropdown-item" href="doctordelete.php">Delete</a></li>
                     </ul>
                 </li> 
             </ul>
@@ -84,7 +84,7 @@ if (!isset($_SESSION['username'])) {
         $uc = ($result) ? mysqli_fetch_assoc($result)['uc'] : 0;
 
         // Query to count doctors
-        $query = "SELECT COUNT(*) as dc FROM doctor";
+        $query = "SELECT COUNT(*) as dc FROM doctor_details";
         $result = mysqli_query($con, $query);
         $dc = ($result) ? mysqli_fetch_assoc($result)['dc'] : 0;
 

@@ -38,14 +38,14 @@
                   <select id="doctor" name="doctor" class="form-control">
                  <?php
                   include 'conn.php';
-                  $query="select did,name from doctor";
+                  $query="select u.uid,u.firstname,l.username from  user u inner join login l on u.uid=l.uid where l.role='doctor'";
                   $result=mysqli_query($con,$query);
                   $row=mysqli_num_rows($result);
                   if($row>0)
                   {
                     while($doc=mysqli_fetch_assoc($result))
                     {
-                        echo "<option value='" . $doc['did'] . "'>" . $doc['name'] . "</option>";
+                        echo "<option value='" . $doc['uid'] . "'>" . $doc['firstname'] . "</option>";
                     }
                   }
                  else {
@@ -82,14 +82,12 @@ if(isset($_POST["submit"]))
     $date = $_POST["date"];
     $stime = $_POST["stime"];
     $etime = $_POST["etime"];
-    $query="insert into timeslot  (did,date,starttime,endtime) values ('$did','$date','$stime','$etime')";
+    $query="insert into timeslot(bookdate,starttime,endtime) values ('$date','$stime','$etime')";
     if (mysqli_query($con, $query)) {
         echo "<script>alert('Time range saved successfully!');</script>";
     } else {
         echo "<script>alert('Error: " . mysqli_error($con) . "');</script>";
     }
-
-
 }
 ?>
 </body>

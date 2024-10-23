@@ -168,6 +168,8 @@ top: 13px;
                 <div class="d-flex justify-content-end pt-3">
                   <button  type="submit" name="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-lg ms-2" style="background-color: black; color: white;">Submit</button>
                 </div>
+                <br>
+                <footer>Are you already member here?<a href="login.php"> Login</a></footer>
 </form>
               </div>
             </div>

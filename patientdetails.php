@@ -23,7 +23,6 @@ $result=mysqli_query($con,$query);
       <th scope="col">Email</th>
       <th scope="col">age</th>
       <th scope="col">gender</th>
-      <th scope="col">Username</th>
     </tr>
   </thead>
 <tbody>
@@ -38,9 +37,8 @@ while($row=mysqli_fetch_array($result))
       <td><?= $row['3']; ?></td>
       <td><?= $row['4']; ?></td>
       <td><?= $row['5']; ?></td>
-      <td><?= $row['8']; ?></td>
-      <td><?= $row['9']; ?></td>
       <td><?= $row['6']; ?></td>
+      <td><?= $row['7']; ?></td>
       <td>
         <form method="POST" action="patientdelete.php" onsubmit="return confirm('Are you sure you want to delete');">
       <input type="hidden" name="id" value="<?=$row['0'];?>">

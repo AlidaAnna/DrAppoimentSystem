@@ -18,6 +18,7 @@
             <input type="text" name="username" placeholder="Username">
             <input type="password" name="password" placeholder="Password">
             <button type="submit" name="submit">Login</button>
+            <footer>Don't you have an account yet?<a href="signup.php"> Signup</a></footer>
             </form>
         </div>
     </div>

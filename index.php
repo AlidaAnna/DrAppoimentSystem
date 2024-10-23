@@ -20,9 +20,12 @@
               <a class="nav-link active" aria-current="page" href="index.php">Home</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="abouthome.php">About Us</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="login.php">Login</a>
             </li>
-            <li class="nav-item dropdown">
+            <!--<li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Services
               </a>
@@ -32,12 +35,12 @@
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
               </ul>
-            </li>
+            </li>-->
             <li class="nav-item">
               <a class="nav-link" href="signup.php">SignUp</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contacts</a>
+              <a class="nav-link" href="contact.php">Contacts</a>
             </li>
           </ul>
         </div>
@@ -45,20 +48,16 @@
     </nav>
 
     <div class="container d-flex justify-content-between align-items-center" style="height: 100vh;">
-      <div>
-           <p>We Provide All Health Care Solution.Your health is our priority.</p>
-        <h1> Protect Your Health And Take Care To Of Your Health</h1>
-          <a href="#" class="btn btn-primary mt-3">Register Now</a>
-      </div>
-      <div>
-        <img src="image/indexpic.jpg" alt="Hospital Image" style="max-width: 600px; height: 400px;">
-      </div>
+    <div class="text-center"> <!-- Centering text and button -->
+        <p>We Provide All Health Care Solutions. Your health is our priority.</p>
+        <h1> Protect Your Health And Take Care Of Your Health</h1>
+        <a href="signup.php" class="btn btn-primary mt-3">Register Now</a>
     </div>
+    <div>
+    <img src="image/indexpic.jpg" alt="Hospital Image" style="float: right; max-width: 700px; height: 600px; margin-left: 30px;">
 
-
-
+    </div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
 </html>
-
-

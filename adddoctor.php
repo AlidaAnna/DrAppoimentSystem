@@ -2,21 +2,23 @@
 include 'conn.php';
 if(isset($_POST["submit"]))
 {
-    $name=$_POST["Name"];
-    $dob=$_POST["DOB"];
+    $fname=$_POST["firstname"];
+    $lname=$_POST["lastname"];
+    $address=$_POST["address"];
     $phno=$_POST["phno"];
+    $email=$_POST["emailid"];
+    $age=$_POST["age"];
     if(isset($_POST["gender"]))
     {
         $gen=$_POST["gender"];
     }
     $quali=$_POST["qualification"];
-    $doj=$_POST["doj"];
     $sp=$_POST["specialization"];
-    $email=$_POST["emailid"];
+    $doj=$_POST["doj"];
     $un=$_POST["username"];
     $pass=$_POST["password"];
     $role="doctor";
-    $query="select count(*) AS dc from doctor";
+    $query="select count(*) AS dc from doctor_details";
     $result=mysqli_query($con,$query);
     $row=mysqli_fetch_assoc($result);
     $dc=$row['dc'];
@@ -26,15 +28,20 @@ if(isset($_POST["submit"]))
     }
     else
     {
-    $query1="insert into doctor(name,DOB,qualification,DOJ,specialization,username,phno,email,gender) values('$name','$dob','$quali','$doj','$sp','$un','$phno','$email','$gen')";
-    $query2="insert into login(username,password,role) values('$un','$pass','$role')";
-    if(mysqli_query($con,$query1) && mysqli_query($con,$query2))
+    $query2="insert into user(firstname,lastname,address,phno,email,age,gender) values('$fname','$lname','$address','$phno','$email','$age','$gen')";
+    if(mysqli_query($con, $query2))
+    {
+    $userid = mysqli_insert_id($con);
+    $query1="insert into doctor_details(uid,qualification,Date_of_joining,specialization) values('$userid','$quali','$doj','$sp')";
+    $query3="insert into login(username,password,role) values('$un','$pass','$role')";
+    if(mysqli_query($con,$query1) && mysqli_query($con,$query3))
 {
 header ("Location: doctordetails.php?status=success");
   exit();
 }
 else{
   echo "Error: " . $query . "<br>" . mysqli_error($con);
+}
 }
 }
 }
@@ -77,14 +84,26 @@ top: 13px;
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <div data-mdb-input-init class="form-outline">
-                      <input type="text" name="Name" id="form3Example1m" class="form-control form-control-lg"   required />
-                      <label class="form-label" for="form3Example1m">Name</label>
+                      <input type="text" name="firstname" id="form3Example1m" class="form-control form-control-lg"   required />
+                      <label class="form-label" for="form3Example1m">Firstname</label>
                     </div>
                   </div>
                   <div class="col-md-6 mb-4">
                     <div data-mdb-input-init class="form-outline">
-                      <input type="date" name="DOB" id="form3Example1n" class="form-control form-control-lg"    required/>
-                      <label class="form-label" for="form3Example1n">Date-Of-Birth</label>
+                      <input type="text" name="lastname" id="form3Example1m" class="form-control form-control-lg"   required />
+                      <label class="form-label" for="form3Example1m">LastName</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div data-mdb-input-init class="form-outline">
+                      <input type="text" name="address" id="form3Example1m" class="form-control form-control-lg"   required />
+                      <label class="form-label" for="form3Example1m">Address</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div data-mdb-input-init class="form-outline">
+                      <input type="number" name="age" id="form3Example1n" class="form-control form-control-lg"    required/>
+                      <label class="form-label" for="form3Example1n">Age</label>
                     </div>
                   </div>
                 </div>
@@ -171,6 +190,5 @@ top: 13px;
     </div>
   </div>
 </section>
-
 </body>
 </html>

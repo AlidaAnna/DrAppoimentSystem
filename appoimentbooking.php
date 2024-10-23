@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    $query = "SELECT * FROM timeslot WHERE did='$doctor_id' AND date='$date'";
+    $query = "SELECT * FROM timeslot WHERE uid='$doctor_id' AND bookdate='$date'";
     $result = mysqli_query($con, $query);
 
     if (mysqli_num_rows($result) > 0) {
@@ -28,23 +28,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         echo "<script>alert('No time range set for this doctor on the selected date.');</script>";
     }
-    $query="select appotime from booking where did='$doctor_id' and appodate='$date'";
+    $query="select appointment_time from appointment where uid='$doctor_id' and appointment_date='$date'";
     $result=mysqli_query($con,$query);
     $bookslot=[];
     while ($row =mysqli_fetch_assoc($result))
     {
-        $bookslot[]=$row['appotime'];
+        $bookslot[]=$row['appointment_time'];
     }
     if(isset($_POST["submit"]))
     {
         $uname=$_POST["uname"];
-        $query="select uid from user where username='$uname'";
+        $query="select uid from login where username='$uname'";
         $result=mysqli_query($con,$query);
         $row=mysqli_fetch_assoc($result);
         $uid=$row['uid'];
+        $query2="select tid from timeslot where username='$uname'";
+        $result2=mysqli_query($con,$query);
+        $row=mysqli_fetch_assoc($result);
+        $uid=$row['uid'];
         $appotime=$_POST["appointment_time"];
-        if(!in_array($appointment_time,$bookslot))
-        $query1="insert into booking (uid,did,appotime,appodate) values  ('$uid','$did','$appotime','$date')";
+        if(!in_array($appotime,$bookslot))
+        $query1="insert into appointment (uid,tid,appointment_date,appointment_time,status,created_at) values  ('$uid','$did','$appotime','$date')";
         if (mysqli_query($con, $query1)) {
             echo "<script>alert('Appointment successfully booked!');</script>";
         } else {
