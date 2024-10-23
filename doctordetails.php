@@ -1,6 +1,6 @@
 <?php
 include 'conn.php';
-$query="select * from doctor";
+$query="select u.uid,u.firstname,u.lastname,u.phno,u.email,d.qualification,d.Date_of_joining,d.specialization from doctor_details d inner join user u ON d.uid=u.uid";
 $result=mysqli_query($con,$query);
 ?>
 <!DOCTYPE html>
@@ -17,10 +17,11 @@ $result=mysqli_query($con,$query);
   <thead>
     <tr>
       <th scope="col">Id</th>
-      <th scope="col">Name</th>
+      <th scope="col">firstname</th>
+      <th scope="col">lastname</th>
       <th scope="col">Qualification</th>
       <th scope="col">Date_of_joining</th>
-      <th scope="col">Specilization</th>
+      <th scope="col">Specialization</th>
       <th scope="col">Phonenumber</th>
       <th scope="col">Gmail</th>
       <th scope="col">Update</th>
@@ -35,12 +36,13 @@ $result=mysqli_query($con,$query);
   {
     ?>
      <th scope="row"><?= $i++; ?></th>
-      <td><?= $row['1']; ?></td>
-      <td><?= $row['3']; ?></td>
-      <td><?= $row['4']; ?></td>
-      <td><?= $row['5']; ?></td>
-      <td><?= $row['7']; ?></td>
-      <td><?= $row['8']; ?></td>
+      <td><?= $row['firstname']; ?></td>
+      <td><?= $row['lastname']; ?></td>
+      <td><?= $row['qualification']; ?></td>
+      <td><?= $row['specialization']; ?></td>
+      <td><?= $row['Date_of_joining']; ?></td>
+      <td><?= $row['phno']; ?></td>
+      <td><?= $row['email']; ?></td>
       <td>
         <form method="POST" action="updatedoctor.php">
           <input type="hidden" name="id" value="<?= $row['0'];?>">

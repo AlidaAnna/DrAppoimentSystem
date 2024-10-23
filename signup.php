@@ -25,7 +25,7 @@ if($num>0)
   echo "Password alredy exist";
 }
 else{
-$query="insert into user(firstname,lastname,address,phno,email,username,age,gender) values('$fn','$ln','$address','$phno','$email','$uname','$age','$gender')";
+$query="insert into user(firstname,lastname,address,phno,email,age,gender) values('$fn','$ln','$address','$phno','$email','$age','$gender')";
 $query2="insert into login(username,password,role) values('$uname','$password','$role')";
 if(mysqli_query($con,$query) && mysqli_query($con,$query2))
 {
