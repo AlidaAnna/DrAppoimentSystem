@@ -1,8 +1,10 @@
 <?php
 include 'conn.php';
 $time_slots = []; 
+$booked_slots = []; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['time'])) {
     $doctor_id = $_POST['doctor']; 
     $date = $_POST['date']; 
 
@@ -35,22 +37,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     {
         $booked_slots[]=$row['appointment_time'];
     }
+}
     if(isset($_POST["submit"]))
     {
         $uname=$_POST["uname"];
-        $query="select uid from login where username='$uname'";
+        $fn=$_POST["doctor"];
+        $query="select u.uid,l.username from login l join user u  ON  l.uid=u.uid where u.uid='$fn'";
         $result=mysqli_query($con,$query);
-        $row=mysqli_fetch_assoc($result);
-        $uid=$row['uid'];
+        if ($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $uid = $row['uid'];
+        } else {
+            echo "No user found with the given username.";
+        }
         $query2="select tid from timeslot where uid='$uid'";
         $result2=mysqli_query($con,$query2);
+        if ($result2 && mysqli_num_rows($result2) > 0) {
         $row=mysqli_fetch_assoc($result2);
         $tid=$row['tid'];
+        } else {
+        echo "No tid found";
+         }
         $appotime=$_POST["appointment_time"];
         if(!in_array($appotime,$booked_slots))
         {
         $status = 'booked';
-        $query1="insert into appointment (uid,tid,appointment_date,appointment_time,status,created_at) values  ('$uid','$tid','$date','$appotime','$status',NOW())";
+        $query1="insert into appointment (uid,tid,patientname,appointment_date,appointment_time,status,created_at) values  ('$uid','$tid','$uname','$date','$appotime','$status',NOW())";
         if (mysqli_query($con, $query1)) {
             echo "<script>alert('Appointment successfully booked!');</script>";
         } else {
@@ -99,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="" method="POST">
             <div class="form-group">
                 <label for="username">Username:</label>
-                <input type="text" class="form-control" name="uname" required>
+                <input type="text" class="form-control" name="uname" value="<?php echo isset($_POST['uname']) ? $_POST['uname'] : ''; ?>" required>
             </div>
             <div class="form-group">
                 <label for="doctor">Doctor:</label>
@@ -107,14 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  <?php
                   include 'conn.php';
                   $query="select l.uid,u.firstname from login l join  user u on l.uid=u.uid where l.role='doctor'";
-
                   $result=mysqli_query($con,$query);
                   $row=mysqli_num_rows($result);
                   if($row>0)
                   {
                     while($doc=mysqli_fetch_assoc($result))
                     {
-                        echo "<option value='" . $doc['did'] . "'>" . $doc['firstname'] . "</option>";
+                        $selected = (isset($_POST['doctor']) && $_POST['doctor'] == $doc['uid']) ? 'selected' : '';
+                        echo "<option value='" . $doc['uid'] . "'>" . $doc['firstname'] . "</option>";
                     }
                   }
                  else {
@@ -125,8 +137,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  </div>
             <div class="form-group">
                 <label for="date">Select Date:</label>
-                <input type="date" class="form-control" name="date" required>
+                <input type="date" class="form-control" name="date" value="<?php echo isset($_POST['date']) ? $_POST['date'] : ''; ?>" required>
             </div>
+            <button type="submit" class="btn btn-primary btn-block" name="time">Time</button>
             <?php if (!empty($time_slots)) { ?>
             <div class="form-group">
                 <label for="stime">Available Time Slots:</label>
