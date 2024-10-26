@@ -1,77 +1,53 @@
 <?php
 include 'conn.php';
 $time_slots = []; 
-$booked_slots = []; 
-
+$booked_slots = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['time'])) {
-    $doctor_id = $_POST['doctor']; 
-    $date = $_POST['date']; 
+        $doctor_id = $_POST['doctor']; 
+        $date = $_POST['date']; 
+        if (!$con) {
+            die("Connection failed: " .mysqli_connect_error());
+        }
+        $query1 = "SELECT starttime, endtime FROM timeslot WHERE uid='$doctor_id' AND bookdate='$date'";
+        $result1 = mysqli_query($con, $query1);
 
-    if (!$con) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
-    $query = "SELECT * FROM timeslot WHERE uid='$doctor_id' AND bookdate='$date'";
-    $result = mysqli_query($con, $query);
-
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $start_time = $row['starttime'];
-            $end_time = $row['endtime'];
-            $start = strtotime($start_time);
-            $end = strtotime($end_time);
-
+        if (mysqli_num_rows($result1) > 0) {
+            $row = mysqli_fetch_assoc($result1);
+            $start = strtotime($row['starttime']);
+            $end = strtotime($row['endtime']);
             while ($start < $end) {
                 $time_slots[] = date('H:i', $start);
                 $start = strtotime("+15 minutes", $start);  
             }
-        }
-    } else {
-        echo "<script>alert('No time range set for this doctor on the selected date.');</script>";
-    }
-    $query="select appointment_time from appointment where uid='$doctor_id' and appointment_date='$date'";
-    $result=mysqli_query($con,$query);
-    $booked_slots = [];
-    while ($row =mysqli_fetch_assoc($result))
-    {
-        $booked_slots[]=$row['appointment_time'];
-    }
-}
-    if(isset($_POST["submit"]))
-    {
-        $uname=$_POST["uname"];
-        $fn=$_POST["doctor"];
-        $query="select u.uid,l.username from login l join user u  ON  l.uid=u.uid where u.uid='$fn'";
-        $result=mysqli_query($con,$query);
-        if ($result && mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $uid = $row['uid'];
         } else {
-            echo "No user found with the given username.";
+            echo "<script>alert('Doctor is not available');</script>";
         }
-        $query2="select tid from timeslot where uid='$uid'";
-        $result2=mysqli_query($con,$query2);
-        if ($result2 && mysqli_num_rows($result2) > 0) {
-        $row=mysqli_fetch_assoc($result2);
-        $tid=$row['tid'];
-        } else {
-        echo "No tid found";
-         }
-        $appotime=$_POST["appointment_time"];
-        if(!in_array($appotime,$booked_slots))
-        {
-        $status = 'booked';
-        $query1="insert into appointment (uid,tid,patientname,appointment_date,appointment_time,status,created_at) values  ('$uid','$tid','$uname','$date','$appotime','$status',NOW())";
-        if (mysqli_query($con, $query1)) {
-            echo "<script>alert('Appointment successfully booked!');</script>";
-        } else {
-            echo "<script>alert('Error booking the appointment.');</script>";
+        $query2 = "SELECT appointment_time FROM appointment WHERE uid='$doctor_id' AND appointment_date='$date'";
+        $result2 = mysqli_query($con, $query2);
+        while ($row = mysqli_fetch_assoc($result2)) {
+            $booked_slots[] = date('H:i', strtotime($row['appointment_time']));
         }
-    } else {
-        echo "<script>alert('This time slot is already booked.');</script>";
     }
-}
+    if (isset($_POST["appointment_time"])) {
+        $uname = $_POST["uname"];
+        $doctor_id = $_POST["doctor"];
+        $appotime = $_POST["appointment_time"];
+        $date = $_POST['date'];
+        if (!in_array($appotime, $booked_slots)) {
+            $status = 'booked';
+            $query5 = "INSERT INTO appointment (uid, tid, pname, appointment_date, appointment_time, status, created_at) 
+                       VALUES ('$doctor_id', (SELECT tid FROM timeslot WHERE uid='$doctor_id' LIMIT 1), '$uname', '$date', '$appotime', '$status', NOW())";
+
+            if (mysqli_query($con, $query5)) {
+                echo "<script>alert('Appointment successfully booked!');</script>";
+            } else {
+                echo "<script>alert('Error booking the appointment.');</script>";
+            }
+        } else {
+            echo "<script>alert('This time slot is already booked.');</script>";
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -103,62 +79,81 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .btn-primary:hover {
             background-color: #0056b3; 
         }
+        .time-slot {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        .available { background-color: #d4edda; color: #155724; }
+        .booked { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            cursor: not-allowed;
+        }
     </style>
+    <script>
+        function confirmBooking(timeSlot) {
+            if (confirm("Are you sure you want to book this slot: " + timeSlot + "?")) {
+                document.getElementById('selectedTimeSlot').value = timeSlot;
+                document.getElementById('appointmentForm').submit();
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="form-container">
         <h2 class="text-center">Appointment</h2>
-        <form action="" method="POST">
+        <form action="" method="POST" id="appointmentForm">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" class="form-control" name="uname" value="<?php echo isset($_POST['uname']) ? $_POST['uname'] : ''; ?>" required>
             </div>
             <div class="form-group">
                 <label for="doctor">Doctor:</label>
-                  <select id="doctor" name="doctor" class="form-control">
-                 <?php
-                  include 'conn.php';
-                  $query="select l.uid,u.firstname from login l join  user u on l.uid=u.uid where l.role='doctor'";
-                  $result=mysqli_query($con,$query);
-                  $row=mysqli_num_rows($result);
-                  if($row>0)
-                  {
-                    while($doc=mysqli_fetch_assoc($result))
-                    {
-                        $selected = (isset($_POST['doctor']) && $_POST['doctor'] == $doc['uid']) ? 'selected' : '';
-                        echo "<option value='" . $doc['uid'] . "'>" . $doc['firstname'] . "</option>";
-                    }
-                  }
-                 else {
-                    echo "<option value=''>No doctors available</option>";
-                }
-                ?>
-                 </select>
-                 </div>
-            <div class="form-group">
-                <label for="date">Select Date:</label>
-                <input type="date" class="form-control" name="date" value="<?php echo isset($_POST['date']) ? $_POST['date'] : ''; ?>" required>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block" name="time">Time</button>
-            <?php if (!empty($time_slots)) { ?>
-            <div class="form-group">
-                <label for="stime">Available Time Slots:</label>
-                <select name="appointment_time" class="form-select" required>
+                <select id="doctor" name="doctor" class="form-control">
                     <?php
-                    foreach ($time_slots as $slot) {
-                        if(in_array($slot,$booked_slots))
-                        {
-                            echo "<option value='$slot' class='booked' disabled>$slot (Booked)</option>";
+                    $query6= "SELECT l.uid, u.firstname FROM login l INNER JOIN user u ON l.uid=u.uid WHERE l.role='doctor'";
+                    $result6 = mysqli_query($con, $query6);
+                    if (mysqli_num_rows($result6) > 0) {
+                        while ($doc = mysqli_fetch_assoc($result6)) {
+                            $selected = (isset($_POST['doctor']) && $_POST['doctor'] == $doc['uid']) ? 'selected' : '';
+                            echo "<option value='{$doc['uid']}' $selected>{$doc['firstname']}</option>";
                         }
-                        else{
-                            echo "<option value='$slot'>$slot (Available)</option>";
-                        }
+                    } else {
+                        echo "<option value=''>No doctors available</option>";
                     }
                     ?>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="date">Select Date:</label>
+                <input type="date" class="form-control" name="date" value="<?php echo isset($_POST['date']) ? $_POST['date'] : ''; ?>" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" name="time">Show Time Slots</button>
+
+            <?php if (!empty($time_slots)) { ?>
+            <div class="form-group">
+                <label for="appointment_time">Available Time Slots:</label>
+                <div>
+                    <?php 
+                    foreach ($time_slots as $slot) {
+                        $class = in_array($slot, $booked_slots) ? 'booked' : 'available';
+                        $disabled = in_array($slot, $booked_slots) ? 'disabled' : '';
+                        if (!$disabled) {
+                            echo "<button type='button' onclick='confirmBooking(\"$slot\")' class='time-slot $class'>$slot</button>";
+                        } else {
+                            echo "<button type='button' class='time-slot $class' disabled>$slot</button>";
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+            <input type="hidden" name="appointment_time" id="selectedTimeSlot">
             <?php } ?>
-            <button type="submit" class="btn btn-primary btn-block" name="submit">Book Appointment</button>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
