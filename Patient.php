@@ -1,4 +1,6 @@
-
+<?php
+include 'conn.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,6 +68,14 @@
             color: #777;
             margin-top: 10px;
         }
+        .welcome-message
+        {
+            font-size:50px;
+            color: Black;
+            margin-bottom:15px;
+            font-weight: bold;
+            font-style:Serif;
+        }
 
         .more-info-button {
             display: inline-block;
@@ -100,33 +110,29 @@
                         <a class="nav-link active" aria-current="page" href="userdetails.php">View details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.php">Login</a>
+                    <a class="nav-link active" aria-current="page" href="appoimentbooking.php">Book Appointment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="signup.php">SignUp</a>
+                    <a class="nav-link active" aria-current="page" href="contact.php">Contacts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contacthome.php">Contacts</a>
+                    <a class="nav-link active" aria-current="page" href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <?php
-include 'conn.php';
-if(isset($_SESSION['username']))
-{
-    $username=$_SESSION['username'];
-    echo " welcome". $username;
-}
-?>
     <div class="container">
         <div class="header">
             <img src="image/loginpic.jpg" alt="Doctor Image" class="doctor-image">
             <div class="text-section">
+            <?php
+                     if(isset($_SESSION['username'])) { ?>
+                     <div class="welcome-message">Welcome,<?php echo$_SESSION['username'];?>!</div>
+                     <?php } ?>
                 <h1 class="main-heading">The Best Doctor <br> <span class="highlight">Gives The Least Medicines</span></h1>
                 <p>Healing is a matter of time, but it is sometimes also a matter of opportunity.</p>
-                <a href="#" class="more-info-button">Book Appointment</a>
+                <a href="appoimentbooking.php" class="more-info-button">Book Appointment</a>
             </div>
         </div>
     </div>
