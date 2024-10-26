@@ -11,24 +11,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         $query1 = "SELECT starttime, endtime FROM timeslot WHERE uid='$doctor_id' AND bookdate='$date'";
         $result1 = mysqli_query($con, $query1);
-
+        // to store  the time slots in an array which is divided by 15 min
         if (mysqli_num_rows($result1) > 0) {
-            $row = mysqli_fetch_assoc($result1);
+            while ($row = mysqli_fetch_assoc($result1)) {
             $start = strtotime($row['starttime']);
             $end = strtotime($row['endtime']);
             while ($start < $end) {
-                $time_slots[] = date('H:i', $start);
+                $time_slots[] = date('g:i A', $start);//g-hour,i-min,A-am/pm
                 $start = strtotime("+15 minutes", $start);  
             }
+        }
         } else {
             echo "<script>alert('Doctor is not available');</script>";
         }
+        // already aa dateil appoiment olla  time kanikum ath booked slot enna arrayil idum
         $query2 = "SELECT appointment_time FROM appointment WHERE uid='$doctor_id' AND appointment_date='$date'";
         $result2 = mysqli_query($con, $query2);
         while ($row = mysqli_fetch_assoc($result2)) {
-            $booked_slots[] = date('H:i', strtotime($row['appointment_time']));
+            $booked_slots[] = date('g:i A', strtotime($row['appointment_time']));
         }
     }
+    //appoiment time select cheyumbol ath booked slotil illel appoiment enna arrayil idunu booked succesfully
     if (isset($_POST["appointment_time"])) {
         $uname = $_POST["uname"];
         $doctor_id = $_POST["doctor"];
@@ -44,8 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 echo "<script>alert('Error booking the appointment.');</script>";
             }
-        } else {
-            echo "<script>alert('This time slot is already booked.');</script>";
+        // } else {
+        //     echo "<script>alert('This time slot is already booked.');</script>";
+        // }
         }
     }
 }
@@ -96,6 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
     <script>
+        //button nekki kazhiyumbol confirm booking olla javascript  
+        //If they choose "OK," the chosen time slot is saved in a hidden input box (called 'selectedTimeSlot').
+        //This saved time will be sent along with the rest of the form data to make the booking
         function confirmBooking(timeSlot) {
             if (confirm("Are you sure you want to book this slot: " + timeSlot + "?")) {
                 document.getElementById('selectedTimeSlot').value = timeSlot;
