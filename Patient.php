@@ -107,7 +107,7 @@ include 'conn.php';
                         <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="userdetails.php">View details</a>
+                        <a class="nav-link active" aria-current="page" href="patientindividualdetails.php">View details</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="appoimentbooking.php">Book Appointment</a>
