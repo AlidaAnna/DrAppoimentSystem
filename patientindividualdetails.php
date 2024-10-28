@@ -137,7 +137,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                    <a href="patientindividualupdate.php" class="profile-edit-btn">Edit Profile</a>
                     </div>
                 </div>
                     <div class="col-md-8">

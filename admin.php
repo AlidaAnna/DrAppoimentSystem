@@ -48,7 +48,7 @@ if (!isset($_SESSION['username'])) {
                     <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="patientdetails.php">Patient</a>
+                    <a class="nav-link" href="Adminpatientdetails.php">Patient</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="appointments.php">Appointments</a>
@@ -58,9 +58,9 @@ if (!isset($_SESSION['username'])) {
                         Doctor
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="adddoctor.php">Add</a></li>
-                        <li><a class="dropdown-item" href="doctordetails.php">Update</a></li>
-                        <li><a class="dropdown-item" href="doctordelete.php">Delete</a></li>
+                        <li><a class="dropdown-item" href="Adminadddoctor.php">Add</a></li>
+                        <li><a class="dropdown-item" href="Admindoctordetails.php">Update</a></li>
+                        <li><a class="dropdown-item" href="Admindoctordetails.php">Delete</a></li>
                     </ul>
                 </li> 
             </ul>
