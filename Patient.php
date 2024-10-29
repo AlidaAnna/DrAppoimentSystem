@@ -20,7 +20,7 @@ include 'conn.php';
             background-color: #f4f4f4;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
+        
         }
 
         .container {
@@ -124,7 +124,7 @@ include 'conn.php';
     </nav>
     <div class="container">
         <div class="header">
-            <img src="image/loginpic.jpg" alt="Doctor Image" class="doctor-image">
+            <img src="image/patientpic.jpg" alt="Doctor Image" class="doctor-image">
             <div class="text-section">
             <?php
                      if(isset($_SESSION['username'])) { ?>
@@ -136,6 +136,11 @@ include 'conn.php';
             </div>
         </div>
     </div>
+
+    <footer class="text-center py-4 bg-light">
+    <p>&copy; 2024 MediMeet. All Rights Reserved.</p>
+  </footer>
+
     
 </body>
 </html>
