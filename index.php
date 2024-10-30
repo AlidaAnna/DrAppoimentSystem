@@ -44,7 +44,7 @@ include("header.php");?>
 </section>
 
 <section class="testimonials" style="padding: 40px 20px; background-color: #f9f9f9; text-align: center;">
-    <h2 style="font-size: 2em; margin-bottom: 20px;">What Our Customers Think About Us!</h2>
+    <h2 style="font-size: 2em; margin-bottom: 20px;">What Do You Think About Us!</h2>
     <div class="testimonial-container" style="display: flex; overflow-x: auto; gap: 20px; padding: 10px; scrollbar-width: thin; scroll-behavior: smooth;">
         <?php
             

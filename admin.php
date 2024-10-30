@@ -79,7 +79,7 @@ if (!isset($_SESSION['username'])) {
         }
 
         // Query to count patients
-        $query = "SELECT COUNT(*) AS uc FROM user";
+        $query = "SELECT COUNT(*) AS uc FROM login where role='Patient'";
         $result = mysqli_query($con, $query);
         $uc = ($result) ? mysqli_fetch_assoc($result)['uc'] : 0;
 
