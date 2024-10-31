@@ -16,7 +16,7 @@ include("header.php");?>
 <div class="container-fluid d-flex justify-content-center align-items-center position-relative" style="height: 100vh; padding: 0; margin: 0;">
     <img src="image/indexnew.jpg" alt="Hospital Image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; object-fit: cover; z-index: 0;">
     
-    <div class="text-content text-center position-absolute" style="z-index: 1; color: white;">
+    <div class="text-content text-center position-absolute" style="z-index: 1; color: Black;">
         <p style="font-size: 1.2em; font-weight: 500;">We Provide All Health Care Solutions. Your health is our priority.</p>
         <h1 style="font-size: 2.5em; font-weight: bold;">Protect Your Health And Take Care Of Your Health</h1>
         <a href="signup.php" class="btn btn-primary mt-3" style="padding: 10px 20px; font-size: 1.2em;">Register Now</a>

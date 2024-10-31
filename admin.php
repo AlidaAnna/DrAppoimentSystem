@@ -51,6 +51,9 @@ if (!isset($_SESSION['username'])) {
                     <a class="nav-link" href="Adminpatientdetails.php">Patient</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="adminsettime.php">timeslot</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="appointments.php">Appointments</a>
                 </li>
                 <li class="nav-item dropdown">
