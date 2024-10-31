@@ -4,6 +4,7 @@ if($_SERVER['REQUEST_METHOD']=== 'POST')
 {
     $id=$_POST["id"];
     $query="delete from user where uid='$id'";
+    $query1="delete from login where uid='$id'";
     if(mysqli_query($con,$query))
     {
         header("Location:patientdetails.php");

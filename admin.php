@@ -51,6 +51,9 @@ if (!isset($_SESSION['username'])) {
                     <a class="nav-link" href="Adminpatientdetails.php">Patient</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="adminsettime.php">Timeslot</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="appointments.php">Appointments</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -79,7 +82,7 @@ if (!isset($_SESSION['username'])) {
         }
 
         // Query to count patients
-        $query = "SELECT COUNT(*) AS uc FROM user";
+        $query = "SELECT COUNT(*) AS uc FROM login where role='Patient'";
         $result = mysqli_query($con, $query);
         $uc = ($result) ? mysqli_fetch_assoc($result)['uc'] : 0;
 
