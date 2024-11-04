@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $start = strtotime($row['starttime']);
             $end = strtotime($row['endtime']);
             while ($start < $end) {
-                $time_slots[] = date('g:i A', $start);//g-hour,i-min,A-am/pm
+                $time_slots[] = date('H:i:s', $start);//g-hour,i-min,A-am/pm
                 $start = strtotime("+15 minutes", $start);  
             }
         }
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $query2 = "SELECT appointment_time FROM appointment WHERE uid='$doctor_id' AND appointment_date='$date'";
         $result2 = mysqli_query($con, $query2);
         while ($row = mysqli_fetch_assoc($result2)) {
-            $booked_slots[] = date('g:i A', strtotime($row['appointment_time']));
+            $booked_slots[] = date('H:i:s', strtotime($row['appointment_time']));
         }
     }
     //appoiment time select cheyumbol ath booked slotil illel appoiment enna arrayil idunu booked succesfully
