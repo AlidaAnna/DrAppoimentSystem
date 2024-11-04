@@ -11,27 +11,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         $query1 = "SELECT starttime, endtime FROM timeslot WHERE uid='$doctor_id' AND bookdate='$date'";
         $result1 = mysqli_query($con, $query1);
+
         // to store  the time slots in an array which is divided by 15 min
         if (mysqli_num_rows($result1) > 0) {
             while ($row = mysqli_fetch_assoc($result1)) {
-            $start = strtotime($row['starttime']);
-            $end = strtotime($row['endtime']);
-            while ($start < $end) {
-                $time_slots[] = date('H:i:s', $start);//g-hour,i-min,A-am/pm
-                $start = strtotime("+15 minutes", $start);  
+                $start = strtotime($row['starttime']);
+                $end = strtotime($row['endtime']);
+                while ($start < $end) {
+                    // Store time in both 24-hour and 12-hour format
+                    $time_slots[] = [
+                        '24hr' => date('H:i:s', $start), // 24-hour format for backend storage
+                        '12hr' => date('h:i A', $start)  // 12-hour format for display
+                    ];
+                    $start = strtotime("+15 minutes", $start);  
+                }
             }
-        }
         } else {
             echo "<script>alert('Doctor is not available');</script>";
         }
-        // already aa dateil appoiment olla  time kanikum ath booked slot enna arrayil idum
+
+        // Fetch already booked time slots for the selected date
         $query2 = "SELECT appointment_time FROM appointment WHERE uid='$doctor_id' AND appointment_date='$date'";
         $result2 = mysqli_query($con, $query2);
         while ($row = mysqli_fetch_assoc($result2)) {
             $booked_slots[] = date('H:i:s', strtotime($row['appointment_time']));
         }
     }
-    //appoiment time select cheyumbol ath booked slotil illel appoiment enna arrayil idunu booked succesfully
+
+    // When an appointment is being booked
     if (isset($_POST["appointment_time"])) {
         $uname = $_POST["uname"];
         $doctor_id = $_POST["doctor"];
@@ -47,9 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 echo "<script>alert('Error booking the appointment.');</script>";
             }
-        // } else {
-        //     echo "<script>alert('This time slot is already booked.');</script>";
-        // }
         }
     }
 }
@@ -100,9 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
     <script>
-        //button nekki kazhiyumbol confirm booking olla javascript  
-        //If they choose "OK," the chosen time slot is saved in a hidden input box (called 'selectedTimeSlot').
-        //This saved time will be sent along with the rest of the form data to make the booking
+        // Confirm booking with the user and set the selected time slot in a hidden input field
         function confirmBooking(timeSlot) {
             if (confirm("Are you sure you want to book this slot: " + timeSlot + "?")) {
                 document.getElementById('selectedTimeSlot').value = timeSlot;
@@ -148,12 +150,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div>
                     <?php 
                     foreach ($time_slots as $slot) {
-                        $class = in_array($slot, $booked_slots) ? 'booked' : 'available';
-                        $disabled = in_array($slot, $booked_slots) ? 'disabled' : '';
+                        $class = in_array($slot['24hr'], $booked_slots) ? 'booked' : 'available';
+                        $disabled = in_array($slot['24hr'], $booked_slots) ? 'disabled' : '';
                         if (!$disabled) {
-                            echo "<button type='button' onclick='confirmBooking(\"$slot\")' class='time-slot $class'>$slot</button>";
+                            echo "<button type='button' onclick='confirmBooking(\"{$slot['24hr']}\")' class='time-slot $class'>{$slot['12hr']}</button>";
                         } else {
-                            echo "<button type='button' class='time-slot $class' disabled>$slot</button>";
+                            echo "<button type='button' class='time-slot $class' disabled>{$slot['12hr']}</button>";
                         }
                     }
                     ?>
