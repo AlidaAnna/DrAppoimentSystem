@@ -2,11 +2,7 @@
 include 'conn.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST["upid"];
-
-    if (!$con) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
+    
     $query = "SELECT u.firstname,u.lastname,u.phno,u.email,d.qualification,
     d.specialization,d.Date_of_joining FROM 
     doctor_details d inner join user u on  u.uid=d.uid where u.uid='$id'";
@@ -20,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (isset($_POST["submit"])) {
+    $id=$_POST['id'];
     $fn = $_POST["firstname"];
     $ln = $_POST["lastname"];
     $phn = $_POST["phno"];
@@ -27,22 +24,19 @@ if (isset($_POST["submit"])) {
     $s = $_POST["spe"];
     $doj = $_POST["doj"];
     $email = $_POST["email"];
-
+    
     $query1 = "UPDATE doctor_details SET  qualification='$q', Date_of_joining='$doj', specialization='$s' WHERE uid='$id'";
     $query2 = "UPDATE user SET firstname='$fn',lastname='$ln',phno='$phn', email='$email' WHERE uid='$id'";
     $result1 = mysqli_query($con, $query1);
     $result2 = mysqli_query($con, $query2);
     if ($result1 && $result2) {
-      echo "Record updated successfully.";
+        header("location: Admindoctordetails.php");
   } else {
       echo "Error updating record: " . mysqli_error($con);
   }
-    header("location:Admindoctordetails.php");
-
-   
+    
 
 
-    mysqli_close($con);
 }
 ?>
 <html>
