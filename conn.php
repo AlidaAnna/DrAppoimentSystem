@@ -13,5 +13,5 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start(); // Start the session if not already started
 }
-$con=mysqli_connect("localhost","root","root","dr");
+$con=mysqli_connect("localhost","root","","dr");
 ?>

@@ -54,7 +54,7 @@ if (!isset($_SESSION['username'])) {
                     <a class="nav-link" href="adminsettime.php">Timeslot</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="appointments.php">Appointments</a>
+                    <a class="nav-link" href="adminappo.php">Appointments</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

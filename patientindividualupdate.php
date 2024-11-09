@@ -1,6 +1,5 @@
 <?php
 include 'conn.php';
-include("header.php");
 $un=$_SESSION["username"];
 $query1="select uid from login where username='$un'";
 $result1=mysqli_query($con,$query1);
