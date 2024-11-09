@@ -26,7 +26,7 @@ if(isset($_POST["submit"]))
 $query3="update user set firstname='$fn',lastname='$ln',address='$add',phno='$phn',email='$em',age='$age' WHERE uid='$uid' ";
 $result3 = mysqli_query($con, $query3);
 if ($result3) {
-    echo "Record updated successfully.";
+    header ("Location: patientindividualdetails.php");    
 } else {
     echo "Error updating record: " . mysqli_error($con);
 }
