@@ -35,7 +35,7 @@ if (isset($_POST["submit"])) {
   } else {
       echo "Error updating record: " . mysqli_error($con);
   }
-    header("location:doctordetails.php");
+    header("location:Admindoctordetails.php");
 
    
 

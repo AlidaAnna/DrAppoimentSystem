@@ -35,7 +35,7 @@ $result=mysqli_query($con,$query);
   while($row=mysqli_fetch_array($result))
   {
     ?>
-     <th scope="row"><?= $i++; ?></th>
+      <td><?= $row['uid']; ?></td>
       <td><?= $row['firstname']; ?></td>
       <td><?= $row['lastname']; ?></td>
       <td><?= $row['qualification']; ?></td>
@@ -52,7 +52,7 @@ $result=mysqli_query($con,$query);
         </form>
       </td>
       <td>
-        <form method="POST" action="doctordelete.php" onsubmit="return confirm('Are you sure you want to delete');">
+        <form method="POST" action="Admindoctordelete.php" onsubmit="return confirm('Are you sure you want to delete');">
       <input type="hidden" name="id" value="<?=$row['0'];?>">
       <button type="submit" class="btn btn-danger btn-sm px-3">
       <i class="fas fa-times">Delete</i>

@@ -10,8 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $row = mysqli_fetch_assoc($result);
         $id = $row['uid']; 
 
-        $query = "DELETE FROM user WHERE uid='$id'";
-        if (mysqli_query($con, $query)) {
+        $query1= "DELETE FROM user WHERE uid='$id'";
+        $query2="DELETE FROM login WHERE uid='$id'";
+
+        if (mysqli_query($con, $query1) && mysqli_query($con,$query2)) {
             header("Location: Adminpatientdetails.php");
             exit();
         } else {

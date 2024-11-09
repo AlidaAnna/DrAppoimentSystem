@@ -22,6 +22,7 @@ if(isset($_POST["submit"]))
     $phn=$_POST["phno"];
     $em=$_POST["email"];
     $age=$_POST["age"];
+    echo $fn;
 $query3="update user set firstname='$fn',lastname='$ln',address='$add',phno='$phn',email='$em',age='$age' WHERE uid='$uid' ";
 $result3 = mysqli_query($con, $query3);
 if ($result3) {

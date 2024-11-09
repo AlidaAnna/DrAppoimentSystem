@@ -36,7 +36,7 @@ if(isset($_POST["submit"]))
     $query3="insert into login(username,password,role) values('$un','$pass','$role')";
     if(mysqli_query($con,$query1) && mysqli_query($con,$query3))
 {
-header ("Location: doctordetails.php?status=success");
+header ("Location: Admindoctordetails.php?status=success");
   exit();
 }
 else{
