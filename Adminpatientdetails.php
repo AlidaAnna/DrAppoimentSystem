@@ -1,6 +1,6 @@
 <?php
 include 'conn.php';
-$query="select u.firstname,u.lastname,u.address,u.phno,u.email,u.gender,l.username from user u join login l on u.uid=l.uid where l.role='Patient'";
+$query="select u.firstname,u.lastname,u.address,u.phno,u.email,u.gender,l.username,u.uid from user u join login l on u.uid=l.uid where l.role='Patient'";
 $result=mysqli_query($con,$query);
 ?>
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ while($row=mysqli_fetch_array($result))
       <td><?= $row['5']; ?></td>
       <td>
         <form method="POST" action="Adminpatientdelete.php" onsubmit="return confirm('Are you sure you want to delete');">
-      <input type="hidden" name="id" value="<?=$row['0'];?>">
+      <input type="hidden" name="id" value="<?=$row['7'];?>">
       <button type="submit" class="btn btn-danger btn-sm px-3">
       <i class="fas fa-times">Delete</i>
       </button>

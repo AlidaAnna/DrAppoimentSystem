@@ -1,5 +1,6 @@
 <?php
 include 'conn.php';
+include("header.php");
 $un=$_SESSION["username"];
 $query1="select uid from login where username='$un'";
 $result1=mysqli_query($con,$query1);
@@ -22,7 +23,6 @@ if(isset($_POST["submit"]))
     $phn=$_POST["phno"];
     $em=$_POST["email"];
     $age=$_POST["age"];
-    echo $fn;
 $query3="update user set firstname='$fn',lastname='$ln',address='$add',phno='$phn',email='$em',age='$age' WHERE uid='$uid' ";
 $result3 = mysqli_query($con, $query3);
 if ($result3) {
@@ -41,7 +41,7 @@ if ($result3) {
 <body><br><br>
 <div class="container mt-3">
 <h1 class="text-center">Profile Update</h1> 
-    <form action="patientindividualdetails.php" method="POST">
+    <form action="" method="POST">
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : ''; ?>"><br><br>
         FirstName:<input type="text" class="form-control mt-3" name="firstname" value="<?php echo isset($row['firstname']) ? $row['firstname'] : ''; ?>"><br><br>
         LastName:<input type="text" class="form-control mt-3" name="lastname" value="<?php echo isset($row['lastname']) ? $row['lastname'] : ''; ?>"><br><br>

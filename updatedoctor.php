@@ -1,13 +1,15 @@
 <?php
 include 'conn.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST["id"];
+    $id = $_POST["upid"];
 
     if (!$con) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    $query = "SELECT u.firstname,u.lastname,u.phno,u.email,d.qualification,d.specialization,d.Date_of_joining FROM doctor_details d inner join user u on  u.uid=d.uid";
+    $query = "SELECT u.firstname,u.lastname,u.phno,u.email,d.qualification,
+    d.specialization,d.Date_of_joining FROM 
+    doctor_details d inner join user u on  u.uid=d.uid where u.uid='$id'";
     $result = mysqli_query($con, $query);
 
     if ($result && mysqli_num_rows($result) > 0) {
