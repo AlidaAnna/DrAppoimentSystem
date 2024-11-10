@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // If successful, show a JavaScript alert box
         echo "<script>
                 alert('Feedback submitted successfully!');
-                window.location.href = 'contacthome.php'; // Redirect to the form page (or any page)
+                window.location.href = 'contact.php'; // Redirect to the form page (or any page)
               </script>";
     } else {
         // If there's an error, show an alert with the error message

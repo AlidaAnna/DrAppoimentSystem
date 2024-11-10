@@ -7,7 +7,7 @@ include 'conn.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr. John Doe | Patient Portal</title>
+    <title>Patient Portal</title>
     <style>
         /* Body and background image styling */
         body {
@@ -103,12 +103,9 @@ include 'conn.php';
 
     <!-- Navbar -->
     <nav>
-        <div class="logo">
-            <a href="#">Dr. John Doe</a>
-        </div>
+        
         <div class="menu">
             <a href="doctor.php">Home</a>
-            <a href="doctordetailsupdate.php">Update details</a>
             <a href="doctordetailsupdate.php">Update details</a>
             <a href="indiappo.php" class="btn">View Appointment Details</a>
             <a href="logout.php">Logout</a>
@@ -135,7 +132,7 @@ include 'conn.php';
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 . All Rights Reserved.</p>
-        <p>For inquiries, <a href="mailto:contact@drjohndoe.com">contact us</a>.</p>
+        <p>For inquiries, <a href="contact.php">contact us</a>.</p>
     </footer>
 
 </body>

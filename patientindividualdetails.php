@@ -1,7 +1,5 @@
  <?php
 include 'conn.php';
-
-
 $un = $_SESSION["username"];
 if (!isset($un)) {
     echo "No user session found.";

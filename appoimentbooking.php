@@ -4,7 +4,7 @@ include 'conn.php';
 $time_slots = [];
 $booked_slots = [];
 $available_dates = [];
-$appointment_details = null; // To store appointment details for the receipt
+$appointment_details = null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Handle fetching available time slots and dates
