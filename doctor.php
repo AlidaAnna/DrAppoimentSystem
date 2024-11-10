@@ -107,11 +107,12 @@ include 'conn.php';
             <a href="#">Dr. John Doe</a>
         </div>
         <div class="menu">
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Patient Portal</a>
-            <a href="#">Contact</a>
+            <a href="doctor.php">Home</a>
+            <a href="doctordetailsupdate.php">Update details</a>
+            <a href="doctordetailsupdate.php">Update details</a>
+            <a href="indiappo.php" class="btn">View Appointment Details</a>
+            <a href="logout.php">Logout</a>
+
         </div>
     </nav>
 
@@ -128,13 +129,12 @@ include 'conn.php';
         }
         ?>
         
-        <p>We are committed to providing the best healthcare for you and your family. Access your appointment details, medical records, and more.</p>
-        <a href="indiappo.php" class="btn">View Appointment Details</a>
+        
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Dr. John Doe. All Rights Reserved.</p>
+        <p>&copy; 2024 . All Rights Reserved.</p>
         <p>For inquiries, <a href="mailto:contact@drjohndoe.com">contact us</a>.</p>
     </footer>
 
