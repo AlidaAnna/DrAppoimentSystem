@@ -1,5 +1,6 @@
 <?php
 include 'conn.php';
+$un=$_SESSION["username"];
 $query="SELECT 
 appointment.uid, 
 appointment.pname, 
@@ -12,7 +13,7 @@ appointment
 LEFT JOIN 
 login 
 ON 
-appointment.uid = login.uid AND login.role = 'doctor'";
+appointment.uid = login.uid AND login.username= 'un'";
 $result = mysqli_query($con, $query);
 ?>
 <!DOCTYPE html>
@@ -28,7 +29,6 @@ $result = mysqli_query($con, $query);
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">DoctorName</th>
       <th scope="col">Patient Name</th>
       <th scope="col">Appointment Date</th>
       <th scope="col">Appointment Time</th>
@@ -40,7 +40,6 @@ $result = mysqli_query($con, $query);
 while($row = mysqli_fetch_assoc($result)) {
 ?>
     <tr>
-      <td><?= htmlspecialchars($row['doctor_name']); ?></td>
       <td><?= htmlspecialchars($row['pname']); ?></td>
       <td><?= htmlspecialchars($row['appointment_date']); ?></td>
       <td><?= htmlspecialchars($row['appointment_time']); ?></td>
