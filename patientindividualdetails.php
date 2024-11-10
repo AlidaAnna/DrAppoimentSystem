@@ -40,7 +40,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 
 <style>
     body{
-    background: #160657;
+    background: #e9ecef;
 }
 .emp-profile{
     padding: 3%;
@@ -115,6 +115,22 @@ if ($result && mysqli_num_rows($result) > 0) {
 </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="Patient.php">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      
+      
+      <li class="nav-item">
+        <a class="nav-link" href="Logout.php">Logout</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
 <div class="container emp-profile">
             <form method="post">
                 <div class="row">
