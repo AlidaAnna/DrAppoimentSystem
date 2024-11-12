@@ -17,12 +17,12 @@ if(isset($_POST["submit"]))
   if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$query1="select * from login where password='$password'";
+$query1="select * from login where username='$uname'";
 $result=mysqli_query($con,$query1);
 $num=mysqli_num_rows($result);
-if($num>0)
-{
-  echo "Password alredy exist";
+if($num > 0) {
+  echo '<script>alert("User name alredy exist")</script>';
+
 }
 else{
 $query="insert into user(firstname,lastname,address,phno,email,age,gender) values('$fn','$ln','$address','$phno','$email','$age','$gender')";
@@ -75,21 +75,25 @@ top: 13px;
                 <form method="POST" action="">
                 <div class="row">
                   <div class="col-md-6 mb-4">
-                    <div data-mdb-input-init class="form-outline">
-                      <input type="text" name="Firstname" id="form3Example1m" class="form-control form-control-lg"   required />
-                      <label class="form-label" for="form3Example1m">First name</label>
-                    </div>
+                  <input type="text" name="Firstname" id="form3Example1m" 
+                  value="<?php echo isset($_POST['Firstname']) ? htmlspecialchars($_POST['Firstname']) : ''; ?>" 
+                  class="form-control form-control-lg" required />
+                  <label class="form-label" for="form3Example1n">First name</label>
                   </div>
                   <div class="col-md-6 mb-4">
                     <div data-mdb-input-init class="form-outline">
-                      <input type="text" name="Lastname" id="form3Example1n" class="form-control form-control-lg"    required/>
+                      <input type="text" name="Lastname" id="form3Example1n" 
+                      value="<?php echo isset($_POST['Lastname']) ? htmlspecialchars($_POST['Lastname']) : ''; ?>" 
+                      class="form-control form-control-lg"    required/>
                       <label class="form-label" for="form3Example1n">Last name</label>
                     </div>
                   </div>
                 </div>
 
                 <div data-mdb-input-init class="form-outline mb-4">
-                  <input type="text"name="Address" id="form3Example8" class="form-control form-control-lg"   required />
+                  <input type="text"name="Address" id="form3Example8"
+                  value="<?php echo isset($_POST['Address']) ? htmlspecialchars($_POST['Address']) : ''; ?>" 
+                   class="form-control form-control-lg"   required />
                   <label class="form-label" for="form3Example8">Address</label>
                 </div>
 
@@ -118,18 +122,23 @@ top: 13px;
                 </div>
 
                 <div data-mdb-input-init class="form-outline mb-4">
-                  <input type="number"  name="age" id="form3Example9" class="form-control form-control-lg"    required/>
+                  <input type="number"  name="age" id="form3Example9" 
+                  value="<?php echo isset($_POST['age']) ? htmlspecialchars($_POST['age']) : ''; ?>" class="form-control form-control-lg"    required/>
                   <label class="form-label" for="form3Example9">Age</label>
                 </div>
 
                 <div data-mdb-input-init class="form-outline mb-4">
-                  <input type="number" name="phonenumber" id="form3Example97" class="form-control form-control-lg"   required />
+                  <input type="number" name="phonenumber" id="form3Example97" 
+                  value="<?php echo isset($_POST['phonenumber']) ? htmlspecialchars($_POST['phonenumber']) : ''; ?>" 
+                  class="form-control form-control-lg"   required />
                   <label class="form-label" for="form3Example97">PhoneNumber</label>
                 </div>
 
 
                 <div data-mdb-input-init class="form-outline mb-4">
-                  <input type="email"  name="emailid" id="form3Example97" class="form-control form-control-lg"   required />
+                  <input type="email"  name="emailid" id="form3Example97" 
+                  value="<?php echo isset($_POST['emailid']) ? htmlspecialchars($_POST['emailid']) : ''; ?>" 
+                  class="form-control form-control-lg"   required />
                   <label class="form-label" for="form3Example97">Email ID</label>
                 </div>
                 <div data-mdb-input-init class="form-outline mb-4">
@@ -142,29 +151,13 @@ top: 13px;
 
                 <div data-mdb-input-init class="form-outline mb-4">
     <input type="password" name="password" id="form3Example99" class="form-control form-control-lg" 
-           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" 
+           pattern="(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}" 
            title="Password must be at least 8 characters, include one uppercase letter, one lowercase letter, one number, and one special character."
            required />
     <label class="form-label" for="form3Example99">Password</label>
 </div>
 
                 <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
-
-<!-- <h6 class="mb-0 me-4">Role: </h6>
-
-<div class="form-check form-check-inline mb-0 me-4">
-  <input class="form-check-input" name="role" type="radio"  id="Patientrole"
-    value="Patient" />
-  <label class="form-check-label" for="Patientrole">Patient</label>
-</div>
-
-<div class="form-check form-check-inline mb-0 me-4">
-  <input class="form-check-input" name="role" type="radio" id="doctorrole"
-    value="doctor" />
-  <label class="form-check-label" for="doctorrole">Doctor</label>
-</div>
-</div> -->
-
                 <div class="d-flex justify-content-end pt-3">
                   <button  type="submit" name="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-lg ms-2" style="background-color: black; color: white;">Submit</button>
                 </div>

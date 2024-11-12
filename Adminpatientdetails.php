@@ -48,7 +48,7 @@ while($row=mysqli_fetch_array($result))
 {
   ?>
      <!-- <th scope="row"><?= $i++; ?></th> -->
-      <td><?= $row['6']; ?></td>
+      <td><?= $row['0']; ?></td>
       <td><?= $row['1']; ?></td>
       <td><?= $row['2']; ?></td>
       <td><?= $row['3']; ?></td>
